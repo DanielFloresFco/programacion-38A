@@ -1,45 +1,66 @@
 #include <iostream>
 using namespace std;
 
+// Función para multiplicar matrices
+void multiplicarMatrices(int A[][10], int B[][10], int resultado[][10], int filasA, int columnasA, int columnasB) {
+    // Inicializar la matriz resultado con ceros
+    for (int i = 0; i < filasA; i++) {
+        for (int j = 0; j < columnasB; j++) {
+            resultado[i][j] = 0;
+        }
+    }
+
+    // Multiplicación
+    for (int i = 0; i < filasA; i++) {
+        for (int j = 0; j < columnasB; j++) {
+            for (int k = 0; k < columnasA; k++) {
+                resultado[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+}
+
 int main() {
-    int n;
+    int filasA, columnasA, filasB, columnasB;
+    int A[10][10], B[10][10], resultado[10][10];
 
-   
-    cout << "Ingrese la dimension de las matrices cuadradas (n x n): ";
-    cin >> n;
+    cout << "Ingrese filas y columnas de la primera matriz (A): ";
+    cin >> filasA >> columnasA;
 
-   
-    int A[n][n], B[n][n], C[n][n];
+    cout << "Ingrese filas y columnas de la segunda matriz (B): ";
+    cin >> filasB >> columnasB;
 
-    
-    cout << "\nIngrese los elementos de la matriz A:\n";
-    for (int i = 0; i < n; ++i)
-        for (int j = 0; j < n; ++j) {
-            cout << "A[" << i << "][" << j << "]: ";
+    // Validar si la multiplicación es posible
+    if (columnasA != filasB) {
+        cout << "Error: El número de columnas de A debe ser igual al número de filas de B." << endl;
+        return 1;
+    }
+
+    // Leer la matriz A
+    cout << "Ingrese los elementos de la matriz A:" << endl;
+    for (int i = 0; i < filasA; i++) {
+        for (int j = 0; j < columnasA; j++) {
             cin >> A[i][j];
         }
+    }
 
-    
-    cout << "\nIngrese los elementos de la matriz B:\n";
-    for (int i = 0; i < n; ++i)
-        for (int j = 0; j < n; ++j) {
-            cout << "B[" << i << "][" << j << "]: ";
+    // Leer la matriz B
+    cout << "Ingrese los elementos de la matriz B:" << endl;
+    for (int i = 0; i < filasB; i++) {
+        for (int j = 0; j < columnasB; j++) {
             cin >> B[i][j];
         }
+    }
 
-    
-    for (int i = 0; i < n; ++i)
-        for (int j = 0; j < n; ++j) {
-            C[i][j] = 0;  
-            for (int k = 0; k < n; ++k)
-                C[i][j] += A[i][k] * B[k][j];
+    // Multiplicar matrices
+    multiplicarMatrices(A, B, resultado, filasA, columnasA, columnasB);
+
+    // Mostrar resultado
+    cout << "Resultado de la multiplicación:" << endl;
+    for (int i = 0; i < filasA; i++) {
+        for (int j = 0; j < columnasB; j++) {
+            cout << resultado[i][j] << " ";
         }
-
-    
-    cout << "\nResultado de la multiplicacion (Matriz C = A x B):\n";
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j)
-            cout << C[i][j] << "\t";
         cout << endl;
     }
 
